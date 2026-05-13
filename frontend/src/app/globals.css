@@ -1,0 +1,137 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background: #050505;
+  --color-foreground: #ededed;
+  --color-neon-blue: #00f3ff;
+  --color-neon-purple: #bc13fe;
+
+  /* Custom Animations fo the Agent UI */
+  @keyframes pulse-slow {
+    0%, 100% { opacity: 0.5; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.1); }
+  }
+
+  @keyframes scanline {
+    0% { transform : translateY(-100%); }
+    100% { transform: translateY(100%); }
+  }
+}
+
+:root {
+  --background: #050505;
+  --foreground: #ededed;
+  --neon-blue: #00f3ff;
+  --neon-purple: #bc13fe;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: 'Inter', sans-serif; /* We'll set this up next */
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Hide the default cursor to use our custom one */
+@media (pointer: fine) {
+  body {
+  cursor: none;
+  }
+  a, button, [role="button"] {
+  cursor: none;
+  }
+}
+
+/* --- Lenis Smooth Scroll Support */
+html.lenis {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
+/* Custom premium scrollbar */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: #050505;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1a1a1a;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--neon-purple);
+  box-shadow: 0 0 10px var(--neon-purple);
+}
+
+/* --- HUD & AGENT SELECTION --- */
+::selection {
+  background: rgba(188, 19, 254, 0.3);
+  color: #fff;
+  text-shadow: 0 0 8px rgba(188, 19, 254, 0.5);
+}
+
+/* THE NEURAL SCANLINE ANIMATION */
+.neural-scan {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(188, 19, 254, 0,1) 50%,
+    transparent 100%
+  );
+  height: 100%;
+  width: 100%;
+  animation: scanline 4s linear infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* --- UTILITY: MASK FOR HERO TEXT */
+.text-mask-beams {
+  background: linear-gradient(to bottom, #fff 30%, rgba(255,255,255,0.1) 100%);
+  -webkit-background-clip: text; /* For Chrome/Safari */
+  background-clip: text; /* The Standard property VS code wants */
+  -webkit-text-fill-color: transparent;
+}
+
+/* --- CYBERPUNK SCROLLBAR --- */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(0, 243, 255, 0.2); /* Neon Blue */
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 243, 255, 0.5);
+}
