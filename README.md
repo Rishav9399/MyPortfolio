@@ -1,4 +1,4 @@
-readme_content = """
+
 <div align="center">
 
 # ⟨ NEURAL_OS // V1.0 ⟩
