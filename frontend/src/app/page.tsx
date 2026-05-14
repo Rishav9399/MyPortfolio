@@ -119,7 +119,7 @@ export default function Home() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="w-full flex justify-center pt-24 pb-32 relative z-20"
+          className="w-full flex justify-center pt-24 pb-32 relative z-[99]"
         >
           <BentoGrid />
         </motion.div>
