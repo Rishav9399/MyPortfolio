@@ -2,6 +2,7 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Terminal, X, Send, Cpu, Zap } from "lucide-react";
+import { playSystemVoice } from "@/utils/audio";
 import axios from "axios";
 
 export default function ChatAgent() {
@@ -44,7 +45,12 @@ export default function ChatAgent() {
     <>
       {/* 1. THE FLOATING TRIGGER BUTTON */}
       <motion.button
-        onClick={() => setIsOpen(true)}
+        onClick={() => {
+          if (!isOpen) {
+            playSystemVoice("Establishing secure link to Neural Proxy.");
+          }
+          setIsOpen(true);
+        }}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         className={`fixed bottom-6 right-6 z-[90] w-14 h-14 rounded-full flex items-center justify-center transition-all duration-500 shadow-[0_0_30px_rgba(0,243,255,0.3)] ${isOpen ? "opacity-0 pointer-events-none scale-75" : "opacity-100 bg-neon-blue/10 border border-neon-blue/50 backdrop-blur-md hover:bg-neon-blue/20"}`}

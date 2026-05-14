@@ -1,6 +1,7 @@
 "use client";
 import { motion, useScroll, useTransform, AnimatePresence, Transition } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
+import { playSystemVoice } from "@/utils/audio";
 
 // --- UNIFIED VAULT DATA ---
 // We now use this data for BOTH the small grid cards and the large popups 
@@ -11,6 +12,7 @@ const VAULT_DATA: Record<string, any> = {
     id: "core",
     pill: "System Architecture",
     title: "Neural OS (v1.0)",
+    voiceTag: "Neural link established. Accessing core operating system.",
     desc: "You are currently interacting with it. This is not a static template; it is a custom-engineered Next.js application leveraging liquid physics, framer-motion, and dynamic layout morphing to create a living web environment.",
     tech: ["Next.js 16", "TypeScript", "Framer Motion", "Tailwind v4"],
   },
@@ -18,6 +20,7 @@ const VAULT_DATA: Record<string, any> = {
     id: "identity",
     pill: "Core Stack • Indexed Skills",
     title: "Vector Identity",
+    voiceTag: "Parsing vector identity and backend infrastructure.",
     desc: "A production-ready stack bridging frontend interfaces with heavy backend AI logic. Proficient in architecting RAG pipelines, context engineering, and managing robust relational databases.",
     tech: ["Python", "FastAPI", "GenAI / RAG", "PostgreSQL", "C/C++"],
   },
@@ -25,6 +28,7 @@ const VAULT_DATA: Record<string, any> = {
     id: "frontend",
     pill: "Active Directive: Production",
     title: "Expanding Horizons",
+    voiceTag: "Downloading active production directives.",
     desc: "Currently accelerating through my first months in a professional engineering role. Actively upgrading my internal systems by mastering CI/CD edge deployments, advanced AI orchestrations, and secure authentication protocols.",
     tech: ["CI/CD (Vercel)", "LangChain", "Vector DBs", "JWT Auth", "CrewAI"],
   },
@@ -32,6 +36,7 @@ const VAULT_DATA: Record<string, any> = {
     id: "system",
     pill: "External Handshake",
     title: "Secure Uplink",
+    voiceTag: "Initializing secure uplink to external nodes.",
     desc: "Initialize a secure connection to my external repositories and professional networks. CV payload is currently undergoing a structural rewrite and will be deployed in a future patch.",
     tech: ["GitHub", "LinkedIn", "X (Twitter)"],
   }
@@ -82,7 +87,10 @@ export const BentoGrid = () => {
           <motion.div 
             layoutId="core-vault"
             transition={liquidSpring}
-            onClick={() => setActiveCard("core")}
+            onClick={() => {
+              setActiveCard("core");
+              playSystemVoice(VAULT_DATA.core.voiceTag);
+            }}
             style={{ y: y1 }}
             onMouseMove={handleMouseMove}
             className="md:col-span-2 md:row-span-2 group relative overflow-hidden rounded-[2.5rem] border border-white/10 bg-white/5 p-10 backdrop-blur-3xl transition-colors hover:border-neon-blue/30 z-10 cursor-pointer"
@@ -102,14 +110,16 @@ export const BentoGrid = () => {
           <motion.div 
             layoutId="identity-vault"
             transition={liquidSpring}
-            onClick={() => setActiveCard("identity")}
+            onClick={() => {
+              setActiveCard("identity");
+              playSystemVoice(VAULT_DATA.identity.voiceTag);
+            }}
             style={{ y: y2 }}
             className="md:col-span-2 relative overflow-hidden bg-[#0a0a0a] border border-white/5 rounded-[2.5rem] p-8 flex flex-col justify-between group hover:border-neon-purple/30 transition-all z-10 cursor-pointer"
           >
             <div className="neural-scan opacity-0 group-hover:opacity-100 transition-opacity" />
             <div className="relative z-10 flex justify-between items-start">
               
-              {/* FIXED: Pill is now above Title to match expanded state */}
               <div className="flex flex-col">
                 <motion.div layoutId="identity-pill" transition={liquidSpring} className="text-zinc-500 text-xs mb-1 uppercase tracking-widest font-mono">{VAULT_DATA.identity.pill}</motion.div>
                 <motion.h3 layoutId="identity-title" transition={liquidSpring} className="text-2xl font-bold tracking-tight">{VAULT_DATA.identity.title}</motion.h3>
@@ -126,7 +136,10 @@ export const BentoGrid = () => {
           <motion.div 
             layoutId="frontend-vault"
             transition={liquidSpring}
-            onClick={() => setActiveCard("frontend")}
+            onClick={() => {
+              setActiveCard("frontend");
+              playSystemVoice(VAULT_DATA.frontend.voiceTag);
+            }}
             whileHover={{ y: -8, scale: 0.99 }}
             className="relative z-20 bg-white/5 border border-white/5 rounded-[2.5rem] p-8 flex flex-col justify-center items-center text-center group transition-all hover:bg-white/[0.07] cursor-pointer"
           >
@@ -139,7 +152,10 @@ export const BentoGrid = () => {
           <motion.div 
             layoutId="system-vault"
             transition={liquidSpring}
-            onClick={() => setActiveCard("system")}
+            onClick={() => {
+              setActiveCard("system");
+              playSystemVoice(VAULT_DATA.system.voiceTag);
+            }}
             whileHover={{ y: -8, scale: 0.99 }}
             className="relative z-20 bg-white/5 border border-white/5 rounded-[2.5rem] p-8 flex flex-col justify-center items-center text-center overflow-hidden group transition-all hover:bg-white/[0.07] cursor-pointer"
           >
@@ -152,7 +168,7 @@ export const BentoGrid = () => {
       </section>
 
       {/* === THE DYNAMIC OVERLAY === */}
-      {/* 1. The BackDrop (Seperate AnimatePresence so it fades cleanly) */}
+      {/* 1. The BackDrop */}
       <AnimatePresence>
         {activeCard && (
           <motion.div 
@@ -167,7 +183,7 @@ export const BentoGrid = () => {
         )}
       </AnimatePresence>
       
-      {/* 2. The Modal Container (Always rendered so React doesn't instantly kill the physics) */}
+      {/* 2. The Modal Container */}
       <div 
         className={`fixed inset-0 z-[100] flex items-center justify-center px-4 md:px-20 py-10 ${activeCard ? "pointer-events-auto" : "pointer-events-none"}`}
         onWheel={(e) => e.stopPropagation()}

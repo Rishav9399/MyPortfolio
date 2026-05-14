@@ -2,7 +2,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import ChatAgent from "@/components/ChatAgent";
-// import { BackgroundBeams } from "@/components/BackgroundBeams"; // Removed as we use NeuralFloor now
 import { BentoGrid } from "@/components/BentoGrid";
 import { SystemLog } from "@/components/SystemLog";
 import { BootSequence } from "@/components/BootSequence";
@@ -11,6 +10,7 @@ import { CustomCursor } from "@/components/CustomCursor";
 import { NeuralFloor } from "@/components/NeuralFloor";
 import { AboutCore } from "@/components/AboutCore";
 import { ArchiveNode } from "@/components/ArchiveNode";
+import { playSystemVoice } from "@/utils/audio"; // Voice Import
   
 export default function Home() {
   // 1. Boot State
@@ -48,6 +48,12 @@ export default function Home() {
   useEffect(() => { 
     if (isBooted) {
       scramble(); 
+      
+      // --- THE WELCOME VOICE ---
+      // We add a 500ms delay so it speaks right as the giant text settles on the screen
+      setTimeout(() => {
+        playSystemVoice("System online. Welcome to Neural O S.");
+      }, 500);
     }
   }, [isBooted]);
 
@@ -124,7 +130,7 @@ export default function Home() {
         {/* 4. THE PROJECT VAULT (Archive Node) */}
         <ArchiveNode />
 
-        {/* 4. FLOATING HUD ELEMENTS */}
+        {/* 5. FLOATING HUD ELEMENTS */}
         <SystemLog />
         <SystemTelemetry />
         <CustomCursor />
